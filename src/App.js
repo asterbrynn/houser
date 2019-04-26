@@ -1,16 +1,17 @@
 import React from 'react';
+import {HashRouter as Router} from 'react-router-dom';
 import Header from './components/Header/Header';
-import Dashboard from './components/Dashboard/Dashboard';
-import Wizard from './components/Wizard/Wizard';
+import router from './routes';
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <Header/>
-      <Dashboard/>
-      <Wizard/>
-    </div>
+    <Router>
+      <div className="App">
+        <Header/>
+        {router}
+      </div>
+    </Router>
   );
 }
 
