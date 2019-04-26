@@ -9,6 +9,7 @@ export default class Dashboard extends Component {
 		this.state = {
 			houses: []
 		}
+		this.deleteHouse = this.deleteHouse.bind(this);
 	}
 	componentDidMount() {
 		this.getHouseData();
@@ -20,11 +21,10 @@ export default class Dashboard extends Component {
 			})
 		}).catch(err => console.log("get problem lol", err))
 	}
-	deleteHouse = async house => {
-		await axios.delete(`api/house/${house.id}`).then(res => {
-			return res.data
+	deleteHouse(id) {
+		axios.delete(`/api/house/${id}`).then(() => {
+			this.getHouseData();
 		}).catch(err => console.log("delete problem lol", err))
-		this.getHouseData();
 	}
 	componentDidUpdate(pastProps) {
 		if (pastProps.match.params.id !== this.props.match.params.id) {

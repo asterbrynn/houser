@@ -14,4 +14,4 @@ massive(CONNECTION_STRING).then(dbInstance => {
 
 app.get('/api/houses', ctrl.getHouses);
 app.post('/api/house', ctrl.create);
-app.delete('api/house/:id', ctrl.delete);
+app.delete('/api/house/:id', ctrl.delete);
