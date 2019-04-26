@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import axios from 'axios';
 import {Link} from 'react-router-dom';
+import axios from 'axios';
 import House from '../House/House';
 
 export default class Dashboard extends Component {
@@ -11,12 +11,27 @@ export default class Dashboard extends Component {
 		}
 	}
 	componentDidMount() {
+		this.getHouseData();
+	}
+	getHouseData() {
 		axios.get('/api/houses').then(res => {
 			this.setState({
 				houses: res.data
 			})
-		}).catch(err => console.log('get problem lol', err))
+		}).catch(err => console.log("get problem lol", err))
 	}
+	deleteHouse = async house => {
+		axios.delete('api/house/:id', house.id).then(res => {
+			return res.data
+		}).catch(err => console.log("delete problem lol", err))
+		this.getHouseData();
+	}
+	componentDidUpdate(pastProps) {
+		if (pastProps.match.params.id !== this.props.match.params.id) {
+			this.getHouseData();
+		}
+	}
+	
 	render() {
 		return(
 			<div>
@@ -25,7 +40,9 @@ export default class Dashboard extends Component {
 					<Link to="/wizard">Add New Property</Link>
 				</button>
 				{this.state.houses.map(house => {
-					return <House key={house.id} house={house}/>
+					console.log(house.id)
+					return <House key={house.id} house={house}
+						deleteHouse={this.deleteHouse}/>
 				})}
 			</div>
 		)

@@ -12,4 +12,6 @@ massive(CONNECTION_STRING).then(dbInstance => {
 	app.listen(SERVER_PORT, () => console.log(`${SERVER_PORT} ducks marching on Rome`));
 })
 
-app.get('/api/houses', ctrl.getHouses)
+app.get('/api/houses', ctrl.getHouses);
+app.post('/api/house', ctrl.create);
+app.delete('api/house/:id', ctrl.delete);

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
+import axios from 'axios';
 
 export default class Wizard extends Component {
 	constructor() {
@@ -39,8 +40,20 @@ export default class Wizard extends Component {
 		})
 	}
 
+	handleAdd = () => {
+		let {name, address, city, state, zip} = this.state;
+		axios.post('api/house', {name, address, city, state, zip}).then(res => {
+			this.setState({
+				name,
+				address,
+				city,
+				state,
+				zip
+			})
+		}).catch(err => console.log("posting error lol", err))
+	}
+
 	render() {
-		console.log(this.state)
 		return(
 			<div>
 				<h1>Add New Listing</h1>
@@ -72,6 +85,9 @@ export default class Wizard extends Component {
 					<input name="zip" id="zip" type="number"
 						onChange={this.handleZipChange}/>
 				</p>
+				<button onClick={this.handleAdd}>
+					<Link to="/">Complete</Link>
+				</button>
 			</div>
 		)
 	}
